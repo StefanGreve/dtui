@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using System.Text;
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -34,7 +35,7 @@ namespace dtui
             {
                 var config = new Configuration
                 {
-                    Language = "en_US"
+                    Language = Language.English
                 };
 
                 string data = JsonConvert.SerializeObject(config, JsonSettings);
@@ -51,6 +52,14 @@ namespace dtui
         {
             Thread.CurrentThread.CurrentUICulture = new CultureInfo(Configuration.Language);
             Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture(Configuration.Language);
+
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+
+            Console.OutputEncoding = Configuration.Language switch
+            {
+                Language.Japanese => Encoding.GetEncoding(932),
+                _ => Encoding.Default
+            };
         }
     }
 }

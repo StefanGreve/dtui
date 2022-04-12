@@ -10,6 +10,11 @@ namespace dtui
     {
         public static void Main(string[] args)
         {
+            if (args.Length > 0 && args.Contains("-usc"))
+            {
+                Application.UseSystemConsole = true;
+            }
+
             Application.Init();
 
             var cm = new ConfigurationManager();
