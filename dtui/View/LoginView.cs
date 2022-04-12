@@ -83,8 +83,8 @@ namespace dtui
 
         Button GetLoginButton(View previous)
         {
-            Button loginButton = new("login") { X = Pos.Right(previous), Y = Pos.Top(previous) + 2 };
-            loginButton.X -= loginButton.Text.Length + 4;
+            Button loginButton = new(ResourceManager.GetString("LoginButton")) { Y = Pos.Top(previous) + 2 };
+            loginButton.X = Pos.Right(previous) - loginButton.Text.Length - (Configuration.Language == "ja_JP" ? 0 : 4);
 
             loginButton
                 .Events()
@@ -98,7 +98,7 @@ namespace dtui
 
         Button GetExitButton(View previus)
         {
-            Button exitButton = new("exit") { X = Pos.Left(previus), Y = Pos.Top(previus) };
+            Button exitButton = new(ResourceManager.GetString("ExitButton")) { X = Pos.Left(previus), Y = Pos.Top(previus) };
             exitButton.X -= exitButton.Text.Length + 4 + 2;
 
             exitButton
@@ -113,9 +113,11 @@ namespace dtui
 
         Label GetProgressLabel(View initial, View previous)
         {
-            var idle = ustring.Make("press 'login' to log in");
-            var progress = ustring.Make("logging in . . .".PadRight(idle.Length));
-            var progressLabel = new Label(idle) { X = Pos.Left(initial), Y = Pos.Top(previous), Width = 40, Enabled = false };
+            var idle = ustring.Make(ResourceManager.GetString("LoginIdleLabel"));
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
+            var progress = ustring.Make(ResourceManager.GetString("LoginProgressLabel").PadRight(idle.Length));
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
+            var progressLabel = new Label(idle) { X = Pos.Left(initial), Y = Pos.Top(previous) + 2, Width = 40, Enabled = false };
 
             ViewModel
                 .WhenAnyObservable(x => x.Login.IsExecuting)
