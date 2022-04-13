@@ -16,6 +16,7 @@ namespace dtui
             }
 
             Application.Init();
+            var toplevel = Application.Top;
 
             var cm = new ConfigurationManager();
             var configuration = ConfigurationManager.Configuration;
@@ -30,15 +31,15 @@ namespace dtui
                 Focus = Application.Driver.MakeAttribute(Color.BrightMagenta, Color.Gray),
                 HotFocus = Application.Driver.MakeAttribute(Color.White, Color.Black),
                 HotNormal = Application.Driver.MakeAttribute(Color.Magenta, Color.Black)
-
             };
 
             RxApp.MainThreadScheduler = TerminalScheduler.Default;
             RxApp.TaskpoolScheduler = TaskPoolScheduler.Default;
 
-            var loginView = new LoginView(new LoginViewModel(), ref configuration, ref resourceManager);
+            var loginView = new LoginView(new LoginViewModel(ref toplevel, ref configuration, ref resourceManager));
 
-            Application.Run(loginView);
+            toplevel.Add(loginView);
+            Application.Run();
             Application.Shutdown();
         }
     }
