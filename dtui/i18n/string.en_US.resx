@@ -123,8 +123,11 @@
   <data name="LoginButton" xml:space="preserve">
     <value>login</value>
   </data>
-  <data name="LoginFailure" xml:space="preserve">
-    <value>login failed.</value>
+  <data name="LoginError" xml:space="preserve">
+    <value>login error</value>
+  </data>
+  <data name="LoginErrorMessage" xml:space="preserve">
+    <value>failed to establish a connection to discord</value>
   </data>
   <data name="LoginIdleLabel" xml:space="preserve">
     <value>press 'login' to log in</value>
@@ -134,6 +137,9 @@
   </data>
   <data name="LoginTitleLabel" xml:space="preserve">
     <value>login to discord</value>
+  </data>
+  <data name="OkButton" xml:space="preserve">
+    <value>ok</value>
   </data>
   <data name="PasswordLabel" xml:space="preserve">
     <value>password</value>

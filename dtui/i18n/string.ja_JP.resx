@@ -123,8 +123,11 @@
   <data name="LoginButton" xml:space="preserve">
     <value>ログイン</value>
   </data>
-  <data name="LoginFailure" xml:space="preserve">
-    <value>ログインに失敗しました。</value>
+  <data name="LoginError" xml:space="preserve">
+    <value>ログインに失敗しました</value>
+  </data>
+  <data name="LoginErrorMessage" xml:space="preserve">
+    <value>ディスコードに接続を確立できませんでした</value>
   </data>
   <data name="LoginIdleLabel" xml:space="preserve">
     <value>ログインにクリックしてログイン</value>
@@ -134,6 +137,9 @@
   </data>
   <data name="LoginTitleLabel" xml:space="preserve">
     <value>ディスコードにログイン</value>
+  </data>
+  <data name="OkButton" xml:space="preserve">
+    <value>ok</value>
   </data>
   <data name="PasswordLabel" xml:space="preserve">
     <value>パスワード</value>
