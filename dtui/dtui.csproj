@@ -1,23 +1,48 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFramework>net6.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <Company>Discord Inc.</Company>
+        <Authors>Stefan Greve</Authors>
+        <NeutralLanguage>en</NeutralLanguage>
+        <PackageProjectUrl>https://github.com/StefanGreve/dtui/</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/StefanGreve/dtui/</RepositoryUrl>
+        <PackageLicenseUrl>https://github.com/StefanGreve/dtui/blob/master/LICENSE.md</PackageLicenseUrl>
+        <PackageReleaseNotes>https://github.com/StefanGreve/dtui/blob/master/CHANGELOG.md</PackageReleaseNotes>
+        <Copyright>(C) 2015 - 2022 Discord, Inc. All rights reserved.</Copyright>
+        <Description>Cross-Platform Discord Terminal UI written in .NET Core.</Description>
+        <AssemblyVersion>1.0.0</AssemblyVersion>
+        <FileVersion>1.0.0-alpha</FileVersion>
+        <Version>1.0.0-alpha</Version>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-    <PackageReference Include="ReactiveMarbles.ObservableEvents.SourceGenerator" Version="1.1.4">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="ReactiveUI" Version="18.0.7" />
-    <PackageReference Include="ReactiveUI.Fody" Version="18.0.7" />
-    <PackageReference Include="System.Reactive" Version="5.0.0" />
-    <PackageReference Include="System.Text.Encoding.CodePages" Version="6.0.0" />
-    <PackageReference Include="terminal.gui" Version="1.4.0" />
-  </ItemGroup>
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+        <DebugType>none</DebugType>
+        <DebugSymbols>false</DebugSymbols>
+        <PlatformTarget>x64</PlatformTarget>
+        <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+        <SelfContained>true</SelfContained>
+        <PublishSingleFile>true</PublishSingleFile>
+        <PublishTrimmed>true</PublishTrimmed>
+        <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+        <TrimMode>Link</TrimMode>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="McMaster.Extensions.CommandLineUtils" Version="4.0.1" />
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+        <PackageReference Include="ReactiveMarbles.ObservableEvents.SourceGenerator" Version="1.1.4">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="ReactiveUI" Version="18.0.7" />
+        <PackageReference Include="ReactiveUI.Fody" Version="18.0.7" />
+        <PackageReference Include="System.Reactive" Version="5.0.0" />
+        <PackageReference Include="System.Text.Encoding.CodePages" Version="6.0.0" />
+        <PackageReference Include="terminal.gui" Version="1.4.0" />
+    </ItemGroup>
 
 </Project>
