@@ -1,10 +1,12 @@
 ﻿using System.Reactive.Concurrency;
-using ReactiveUI;
-using Terminal.Gui;
 using System.Reflection;
 using System.Resources;
 
 using McMaster.Extensions.CommandLineUtils;
+
+using ReactiveUI;
+
+using Terminal.Gui;
 
 namespace dtui
 {

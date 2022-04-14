@@ -1,10 +1,14 @@
 ﻿using System.Reactive.Disposables;
 using System.Reactive.Linq;
-using NStack;
-using ReactiveUI;
-using Terminal.Gui;
-using ReactiveMarbles.ObservableEvents;
 using System.Resources;
+
+using NStack;
+
+using ReactiveMarbles.ObservableEvents;
+
+using ReactiveUI;
+
+using Terminal.Gui;
 
 namespace dtui
 {
