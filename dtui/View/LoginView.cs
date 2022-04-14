@@ -84,7 +84,7 @@ namespace dtui
         Button GetLoginButton(View previous)
         {
             Button loginButton = new(ResourceManager.GetString("LoginButton")) { Y = Pos.Top(previous) + 2 };
-            loginButton.X = Pos.Right(previous) - loginButton.Text.Length - (Configuration.Language == "ja_JP" ? 0 : 4);
+            loginButton.X = Pos.Right(previous) - loginButton.Text.Length - (Language.IsAsian(Configuration.Language) ? 0 : 4);
 
             loginButton
                 .Events()
@@ -131,11 +131,12 @@ namespace dtui
             return progressLabel;
         }
 
-        public LoginView(LoginViewModel viewModel, ref Configuration configuration, ref ResourceManager resourceManager) : base("dtui")
+        public LoginView(LoginViewModel viewModel) : base("dtui")
         {
             ViewModel = viewModel;
-            Configuration = configuration;
-            ResourceManager = resourceManager;
+            Configuration = LoginViewModel.Configuration;
+            ResourceManager = LoginViewModel.ResourceManager;
+
             Label titleLabel = GetTitleLabel();
             Label usernameLabel = GetUsernameLabel(titleLabel);
             TextField usernameInput = GetUsernameInput(usernameLabel);
