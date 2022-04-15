@@ -32,13 +32,7 @@ namespace dtui
 
             if (!File.Exists(Path))
             {
-                var config = new Configuration
-                {
-                    Language = Language.English
-                };
-
-                string data = JsonConvert.SerializeObject(config, JsonSettings);
-
+                string data = JsonConvert.SerializeObject(new Configuration(), JsonSettings);
                 File.WriteAllText(Path, data);
             }
         }
