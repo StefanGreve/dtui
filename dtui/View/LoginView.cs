@@ -38,7 +38,7 @@ namespace dtui
 
         TextField GetUsernameInput(View previous)
         {
-            TextField usernameInput = new() { X = previous.Text.Length + 2, Y = Pos.Top(previous), Width = 40 };
+            TextField usernameInput = new() { X = previous.Text.Length + (Language.IsAsian(Configuration.Language) ? -2 : 2), Y = Pos.Top(previous), Width = 40 };
 
             ViewModel
                 .WhenAnyValue(x => x.Username)
@@ -66,7 +66,7 @@ namespace dtui
 
         TextField GetPasswordInput(View previous)
         {
-            TextField passwordInput = new() { X = previous.Text.Length + 2, Y = Pos.Top(previous), Width = 40, Secret = true };
+            TextField passwordInput = new() { X = previous.Text.Length + (Language.IsAsian(Configuration.Language) ? -2 : 2), Y = Pos.Top(previous), Width = 40, Secret = true };
 
             ViewModel
                 .WhenAnyValue(x => x.Password)
@@ -100,10 +100,25 @@ namespace dtui
             return loginButton;
         }
 
+        Button GetCancelButton(View previous)
+        {
+            Button cancelButton = new(ResourceManager.GetString("CancelButton")) { X = Pos.Left(previous), Y = Pos.Top(previous) };
+            cancelButton.X -= cancelButton.Text.Length + (Language.IsAsian(Configuration.Language) ? 0 : 4) + 2;
+
+            cancelButton
+                .Events()
+                .Clicked
+                .InvokeCommand(ViewModel, x => x.Cancel)
+                .DisposeWith(_disposable);
+
+            Add(cancelButton);
+            return cancelButton;
+        }
+
         Button GetExitButton(View previus)
         {
             Button exitButton = new(ResourceManager.GetString("ExitButton")) { X = Pos.Left(previus), Y = Pos.Top(previus) };
-            exitButton.X -= exitButton.Text.Length + 4 + 2;
+            exitButton.X -= exitButton.Text.Length + (Language.IsAsian(Configuration.Language) ? 3 : 4) + 2;
 
             exitButton
                 .Events()
@@ -128,7 +143,6 @@ namespace dtui
                 .BindTo(progressLabel, x => x.Text)
                 .DisposeWith(_disposable);
 
-
             Add(progressLabel);
             return progressLabel;
         }
@@ -145,9 +159,9 @@ namespace dtui
             Label passwordLabel = GetPasswordLabel(usernameLabel);
             TextField passwordInput = GetPasswordInput(passwordLabel);
             Button loginButton = GetLoginButton(passwordInput);
-            Button exitButton = GetExitButton(loginButton);
-
-            GetProgressLabel(titleLabel, loginButton);
+            Label progressLabel = GetProgressLabel(titleLabel, loginButton);
+            Button cancelButton = GetCancelButton(loginButton);
+            Button exitButton = GetExitButton(cancelButton);
         }
 
         object IViewFor.ViewModel

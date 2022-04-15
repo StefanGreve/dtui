@@ -8,13 +8,16 @@ using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
 using Terminal.Gui;
+using System.Reactive.Linq;
 
 namespace dtui
 {
     [DataContract]
     public class LoginViewModel : ReactiveObject
     {
-        readonly ObservableAsPropertyHelper<bool> _isValid;
+        private readonly ObservableAsPropertyHelper<bool> _isValid;
+
+        private CancellationTokenSource _cancellationTokenSource = new();
 
         [Reactive, DataMember]
         public ustring Username { get; set; } = ustring.Empty;
@@ -41,21 +44,38 @@ namespace dtui
         public ReactiveCommand<Unit, Unit> Login { get; }
 
         [IgnoreDataMember]
+        public ReactiveCommand<Unit, Unit> Cancel { get; }
+
+        [IgnoreDataMember]
         public ReactiveCommand<Unit, Unit> Exit { get; }
 
-        private async Task LoginAsync(CancellationToken ct)
+        private async Task LoginAsync()
         {
-            // TODO: use cancellation token
-            IsAuthenticated = await Discord.Login(Username.ToString(), Password.ToString());
+            var cancellationToken = _cancellationTokenSource.Token;
 
-            if (IsAuthenticated)
+            try
             {
-                Toplevel.RemoveAll();
-                Toplevel.Add(new ChatView(new ChatViewModel(ref Toplevel, ref Configuration, ref ResourceManager)));
+                IsAuthenticated = await Discord.Login(Username.ToString(), Password.ToString(), cancellationToken);
+
+                if (IsAuthenticated)
+                {
+                    Toplevel.RemoveAll();
+                    Toplevel.Add(new ChatView(new ChatViewModel(ref Toplevel, ref Configuration, ref ResourceManager)));
+                }
+                else
+                {
+                    MessageBox.ErrorQuery(ResourceManager.GetString("LoginError"), ResourceManager.GetString("LoginErrorMessage"), ResourceManager.GetString("OkButton"));
+                }
             }
-            else
+            catch (OperationCanceledException)
             {
-                MessageBox.ErrorQuery(ResourceManager.GetString("LoginError"), ResourceManager.GetString("LoginErrorMessage"), ResourceManager.GetString("OkButton"));
+                MessageBox.ErrorQuery(ResourceManager.GetString("LoginCancelled"), ResourceManager.GetString("LoginCancelledMessage"), ResourceManager.GetString("OkButton"));
+                _cancellationTokenSource.Dispose();
+
+            }
+            finally
+            {
+                _cancellationTokenSource = new CancellationTokenSource();
             }
         }
 
@@ -74,6 +94,10 @@ namespace dtui
             _isValid = canLogin.ToProperty(this, x => x.IsValid, scheduler: RxApp.MainThreadScheduler);
 
             Login = ReactiveCommand.CreateFromTask(LoginAsync, canLogin);
+            Login.ThrownExceptions.Subscribe(async _ => await LoginAsync());
+
+            Cancel = ReactiveCommand.Create(() => _cancellationTokenSource.Cancel());
+
             Exit = ReactiveCommand.Create(() => Application.RequestStop());
         }
     }
