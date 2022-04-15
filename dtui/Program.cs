@@ -14,7 +14,7 @@ namespace dtui
     {
         public static int Main(string[] args)
         {
-            var cm = new ConfigurationManager();
+            ConfigurationManager.Init();
             var configuration = ConfigurationManager.Configuration;
             ConfigurationManager.ChangeCulture();
 

@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 
 namespace dtui
 {
-    internal class ConfigurationManager
+    internal static class ConfigurationManager
     {
         public static string Folder
         {
@@ -26,7 +26,7 @@ namespace dtui
 
         private static readonly JsonSerializerSettings JsonSettings = new() { NullValueHandling = NullValueHandling.Ignore, Formatting = Formatting.Indented };
 
-        public ConfigurationManager()
+        public static void Init()
         {
             Directory.CreateDirectory(Folder);
 
@@ -43,9 +43,7 @@ namespace dtui
             }
         }
 
-#pragma warning disable CS8603 // Possible null reference return.
-        public static Configuration Configuration => JsonConvert.DeserializeObject<Configuration>(File.ReadAllText(Path), JsonSettings);
-#pragma warning restore CS8603 // Possible null reference return.
+        public static Configuration Configuration => JsonConvert.DeserializeObject<Configuration>(File.ReadAllText(Path), JsonSettings)!;
 
         public static void ChangeCulture()
         {

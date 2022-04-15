@@ -2,6 +2,7 @@
 
 namespace dtui
 {
+    [Serializable]
     public class Configuration
     {
         [JsonProperty(PropertyName = "language", Required = Required.Always)]
