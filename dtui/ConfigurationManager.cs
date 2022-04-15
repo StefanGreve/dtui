@@ -49,6 +49,8 @@ namespace dtui
             Console.OutputEncoding = Configuration.Language switch
             {
                 Language.Japanese => Encoding.GetEncoding(932),
+                Language.Chinese => Encoding.GetEncoding(936),
+                Language.Spanish => Encoding.GetEncoding(1252),
                 _ => Encoding.Default
             };
         }
