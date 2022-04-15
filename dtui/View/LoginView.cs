@@ -1,10 +1,14 @@
 ﻿using System.Reactive.Disposables;
 using System.Reactive.Linq;
-using NStack;
-using ReactiveUI;
-using Terminal.Gui;
-using ReactiveMarbles.ObservableEvents;
 using System.Resources;
+
+using NStack;
+
+using ReactiveMarbles.ObservableEvents;
+
+using ReactiveUI;
+
+using Terminal.Gui;
 
 namespace dtui
 {
@@ -114,9 +118,7 @@ namespace dtui
         Label GetProgressLabel(View initial, View previous)
         {
             var idle = ustring.Make(ResourceManager.GetString("LoginIdleLabel"));
-#pragma warning disable CS8602 // Dereference of a possibly null reference.
-            var progress = ustring.Make(ResourceManager.GetString("LoginProgressLabel").PadRight(idle.Length));
-#pragma warning restore CS8602 // Dereference of a possibly null reference.
+            var progress = ustring.Make(ResourceManager.GetString("LoginProgressLabel")!.PadRight(idle.Length));
             var progressLabel = new Label(idle) { X = Pos.Left(initial), Y = Pos.Top(previous) + 2, Width = 40, Enabled = false };
 
             ViewModel
