@@ -117,11 +117,20 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CancelButton" xml:space="preserve">
+    <value>cancel</value>
+  </data>
   <data name="ExitButton" xml:space="preserve">
     <value>exit</value>
   </data>
   <data name="LoginButton" xml:space="preserve">
     <value>login</value>
+  </data>
+  <data name="LoginCancelled" xml:space="preserve">
+    <value>cancelled login</value>
+  </data>
+  <data name="LoginCancelledMessage" xml:space="preserve">
+    <value>login has been cancelled successfully</value>
   </data>
   <data name="LoginError" xml:space="preserve">
     <value>login error</value>
