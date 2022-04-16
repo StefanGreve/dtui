@@ -38,7 +38,7 @@ namespace dtui
 
         TextField GetUsernameInput(View previous)
         {
-            TextField usernameInput = new() { X = previous.Text.Length + (Language.IsAsian(Configuration.Language) ? -2 : 2), Y = Pos.Top(previous), Width = 40 };
+            TextField usernameInput = new() { X = previous.Text.Sum(x => Rune.ColumnWidth(x)) + 3, Y = Pos.Top(previous), Width = 40 };
 
             ViewModel
                 .WhenAnyValue(x => x.Username)
@@ -66,7 +66,7 @@ namespace dtui
 
         TextField GetPasswordInput(View previous)
         {
-            TextField passwordInput = new() { X = previous.Text.Length + (Language.IsAsian(Configuration.Language) ? -2 : 2), Y = Pos.Top(previous), Width = 40, Secret = true };
+            TextField passwordInput = new() { X = previous.Text.Sum(x => Rune.ColumnWidth(x)) + 3, Y = Pos.Top(previous), Width = 40, Secret = true };
 
             ViewModel
                 .WhenAnyValue(x => x.Password)
@@ -88,7 +88,7 @@ namespace dtui
         Button GetLoginButton(View previous)
         {
             Button loginButton = new(ResourceManager.GetString("LoginButton")) { Y = Pos.Top(previous) + 2 };
-            loginButton.X = Pos.Right(previous) - loginButton.Text.Length - (Language.IsAsian(Configuration.Language) ? 0 : 4);
+            loginButton.X = Pos.Right(previous) - loginButton.Text.Sum(x => Rune.ColumnWidth(x)) - 4;
 
             loginButton
                 .Events()
@@ -103,7 +103,7 @@ namespace dtui
         Button GetCancelButton(View previous)
         {
             Button cancelButton = new(ResourceManager.GetString("CancelButton")) { X = Pos.Left(previous), Y = Pos.Top(previous) };
-            cancelButton.X -= cancelButton.Text.Length + (Language.IsAsian(Configuration.Language) ? 0 : 4) + 2;
+            cancelButton.X -= cancelButton.Text.Sum(x => Rune.ColumnWidth(x)) + 6;
 
             cancelButton
                 .Events()
@@ -118,7 +118,7 @@ namespace dtui
         Button GetExitButton(View previus)
         {
             Button exitButton = new(ResourceManager.GetString("ExitButton")) { X = Pos.Left(previus), Y = Pos.Top(previus) };
-            exitButton.X -= exitButton.Text.Length + (Language.IsAsian(Configuration.Language) ? 3 : 4) + 2;
+            exitButton.X -= exitButton.Text.Sum(x => Rune.ColumnWidth(x)) + 6;
 
             exitButton
                 .Events()
