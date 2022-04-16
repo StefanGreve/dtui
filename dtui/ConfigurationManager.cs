@@ -32,13 +32,7 @@ namespace dtui
 
             if (!File.Exists(Path))
             {
-                var config = new Configuration
-                {
-                    Language = Language.English
-                };
-
-                string data = JsonConvert.SerializeObject(config, JsonSettings);
-
+                string data = JsonConvert.SerializeObject(new Configuration(), JsonSettings);
                 File.WriteAllText(Path, data);
             }
         }
@@ -55,6 +49,8 @@ namespace dtui
             Console.OutputEncoding = Configuration.Language switch
             {
                 Language.Japanese => Encoding.GetEncoding(932),
+                Language.Chinese => Encoding.GetEncoding(936),
+                Language.Spanish => Encoding.GetEncoding(1252),
                 _ => Encoding.Default
             };
         }

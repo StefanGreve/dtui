@@ -15,10 +15,10 @@ namespace dtui
         public static int Main(string[] args)
         {
             ConfigurationManager.Init();
-            var configuration = ConfigurationManager.Configuration;
             ConfigurationManager.ChangeCulture();
 
             var assembly = Assembly.GetExecutingAssembly();
+            var configuration = ConfigurationManager.Configuration;
             var resourceManager = new ResourceManager($"dtui.i18n.string.{configuration.Language}", assembly);
 
             var app = new CommandLineApplication
@@ -42,14 +42,15 @@ namespace dtui
 
                     Application.Init();
                     var toplevel = Application.Top;
+                    var colorscheme = configuration.ColorScheme;
 
-                    Colors.Base = new ColorScheme()
+                    Colors.Base = new Terminal.Gui.ColorScheme()
                     {
-                        Normal = Application.Driver.MakeAttribute(Color.Gray, Color.Black),
-                        Disabled = Application.Driver.MakeAttribute(Color.DarkGray, Color.Black),
-                        Focus = Application.Driver.MakeAttribute(Color.BrightMagenta, Color.Gray),
-                        HotFocus = Application.Driver.MakeAttribute(Color.White, Color.Black),
-                        HotNormal = Application.Driver.MakeAttribute(Color.Magenta, Color.Black)
+                        Disabled = Application.Driver.MakeAttribute(colorscheme.Disabled.ForeColor, colorscheme.Disabled.BackColor),
+                        Normal = Application.Driver.MakeAttribute(colorscheme.Normal.ForeColor, colorscheme.Normal.BackColor),
+                        HotNormal = Application.Driver.MakeAttribute(colorscheme.HotNormal.ForeColor, colorscheme.HotNormal.BackColor),
+                        Focus = Application.Driver.MakeAttribute(colorscheme.Focus.ForeColor, colorscheme.Focus.BackColor),
+                        HotFocus = Application.Driver.MakeAttribute(colorscheme.HotFocus.ForeColor, colorscheme.HotFocus.BackColor)
                     };
 
                     RxApp.MainThreadScheduler = TerminalScheduler.Default;
