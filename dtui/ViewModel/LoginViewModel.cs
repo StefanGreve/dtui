@@ -55,7 +55,7 @@ namespace dtui
 
             try
             {
-                IsAuthenticated = await Discord.Login(Username.ToString(), Password.ToString(), cancellationToken);
+                IsAuthenticated = await Discord.Login(Username.ToString()!, Password.ToString()!, cancellationToken);
 
                 if (IsAuthenticated)
                 {
