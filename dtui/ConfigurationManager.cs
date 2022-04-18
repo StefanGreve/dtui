@@ -39,14 +39,14 @@ namespace dtui
 
         public static Configuration Configuration => JsonConvert.DeserializeObject<Configuration>(File.ReadAllText(Path), JsonSettings)!;
 
-        public static void ChangeCulture()
+        public static void ChangeCulture(string language)
         {
-            Thread.CurrentThread.CurrentUICulture = new CultureInfo(Configuration.Language);
-            Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture(Configuration.Language);
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo(language);
+            Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture(language);
 
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
-            Console.OutputEncoding = Configuration.Language switch
+            Console.OutputEncoding = language switch
             {
                 Language.Japanese => Encoding.GetEncoding(932),
                 Language.Chinese => Encoding.GetEncoding(936),

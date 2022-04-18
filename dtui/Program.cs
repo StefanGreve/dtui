@@ -15,7 +15,6 @@ namespace dtui
         public static int Main(string[] args)
         {
             ConfigurationManager.Init();
-            ConfigurationManager.ChangeCulture();
 
             var assembly = Assembly.GetExecutingAssembly();
             var configuration = ConfigurationManager.Configuration;
@@ -44,7 +43,9 @@ namespace dtui
                     Application.Init();
                     var toplevel = Application.Top;
                     var colorscheme = configuration.ColorScheme;
-                    var resourceManager = new ResourceManager($"dtui.i18n.string.{(language.HasValue() ? language.Value() : configuration.Language)}", assembly);
+                    var languageCode = language.HasValue() ? language.Value()! : configuration.Language;
+                    var resourceManager = new ResourceManager($"dtui.i18n.string.{languageCode}", assembly);
+                    ConfigurationManager.ChangeCulture(languageCode);
 
                     Colors.Base = new Terminal.Gui.ColorScheme()
                     {
