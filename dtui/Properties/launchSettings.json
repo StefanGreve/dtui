@@ -2,7 +2,7 @@
   "profiles": {
     "dtui": {
       "commandName": "Project",
-      "commandLineArgs": "run"
+      "commandLineArgs": "run --language en_US"
     }
   }
 }
