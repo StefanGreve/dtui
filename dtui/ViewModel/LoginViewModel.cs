@@ -15,8 +15,6 @@ namespace dtui
     [DataContract]
     public class LoginViewModel : ReactiveObject
     {
-        private readonly ObservableAsPropertyHelper<bool> _isValid;
-
         private CancellationTokenSource _cancellationTokenSource = new();
 
         [Reactive, DataMember]
@@ -24,9 +22,6 @@ namespace dtui
 
         [Reactive, DataMember]
         public ustring Password { get; set; } = ustring.Empty;
-
-        [IgnoreDataMember]
-        public bool IsValid => _isValid.Value;
 
         [IgnoreDataMember]
         public bool IsAuthenticated { get; set; } = false;
@@ -90,8 +85,6 @@ namespace dtui
                     x => x.Password,
                     (username, password) => !ustring.IsNullOrEmpty(username) && !ustring.IsNullOrEmpty(password)
             );
-
-            _isValid = canLogin.ToProperty(this, x => x.IsValid, scheduler: RxApp.MainThreadScheduler);
 
             Login = ReactiveCommand.CreateFromTask(LoginAsync, canLogin);
             Login.ThrownExceptions.Subscribe(async _ => await LoginAsync());
