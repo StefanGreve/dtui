@@ -47,7 +47,7 @@ namespace dtui
                     var resourceManager = new ResourceManager($"dtui.i18n.string.{languageCode}", assembly);
                     ConfigurationManager.ChangeCulture(languageCode);
 
-                    Colors.Base = new Terminal.Gui.ColorScheme()
+                    Colors.ColorSchemes["Base"] = new Terminal.Gui.ColorScheme()
                     {
                         Disabled = Application.Driver.MakeAttribute(colorscheme.Disabled.ForeColor, colorscheme.Disabled.BackColor),
                         Normal = Application.Driver.MakeAttribute(colorscheme.Normal.ForeColor, colorscheme.Normal.BackColor),
