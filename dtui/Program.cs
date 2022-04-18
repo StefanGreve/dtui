@@ -19,7 +19,6 @@ namespace dtui
 
             var assembly = Assembly.GetExecutingAssembly();
             var configuration = ConfigurationManager.Configuration;
-            var resourceManager = new ResourceManager($"dtui.i18n.string.{configuration.Language}", assembly);
 
             var app = new CommandLineApplication
             {
@@ -34,15 +33,18 @@ namespace dtui
             app.Command("run", runCmd =>
             {
                 runCmd.Description = "Enter the Discord TUI.";
+
                 var usc = runCmd.Option("-usc|--use-system-console", "Enforce usage of the System.Console-based driver", CommandOptionType.NoValue);
+                var language = runCmd.Option("-l|--language", "Set TUI language code", CommandOptionType.SingleValue);
 
                 runCmd.OnExecute(() =>
                 {
-                    Application.UseSystemConsole = usc.HasValue();
+                    Application.UseSystemConsole = usc.HasValue() ? true : configuration.UseSystemConsole;
 
                     Application.Init();
                     var toplevel = Application.Top;
                     var colorscheme = configuration.ColorScheme;
+                    var resourceManager = new ResourceManager($"dtui.i18n.string.{(language.HasValue() ? language.Value() : configuration.Language)}", assembly);
 
                     Colors.Base = new Terminal.Gui.ColorScheme()
                     {

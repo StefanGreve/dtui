@@ -42,6 +42,9 @@ namespace dtui
         [JsonProperty(PropertyName = "language", Required = Required.Always)]
         public string Language { get; set; } = dtui.Language.English;
 
+        [JsonProperty(PropertyName = "usc")]
+        public bool UseSystemConsole { get; set; } = false;
+
         [JsonProperty(PropertyName = "colorscheme")]
         public dtui.ColorScheme ColorScheme { get; set; } = new dtui.ColorScheme();
     }
